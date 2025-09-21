@@ -1,0 +1,23 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for pk, appointment in appointments%}
+        <tr>
+            <th scope="row">*</th>
+            <td>{{appointment}}</td>
+            <td>
+                <form action="delete_appointment/{{pk}}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+          </tr>
+        {%endfor%}
+    </tbody>
+  </table>

@@ -1,0 +1,34 @@
+{% extends "menu_bar.html" %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Name</th>
+        <th scope="col">Age</th>
+        <th scope="col">Breed</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for pet in pets%}
+        <tr>
+            <th scope="row">*</th>
+            <td>{{pet.name}}</td>
+            <td>{{pet.age}}</td>
+            <td>{{pet.breed}}</td>
+            <td><a href="edit_pet_view/{{pet.pk}}"  class="btn btn-success">Edit</a></td>
+            <td>
+              <form action="delete_pet/{{pet.pk}}" method="post">
+                {% csrf_token %}
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {%endfor%}
+    </tbody>
+  </table>
+{% endblock %}

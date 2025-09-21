@@ -1,0 +1,314 @@
+{% extends "menu_bar.html" %}
+
+{%block content%}
+
+<main>
+    <div class="contenedor__todo">
+       <div class="caja__trasera">
+           <div class="caja__trasera-login">
+               <h3>¿Ya tienes una cuenta?</h3>
+               <p>Inicia sesión para acceder a los beneficios en la página</p>
+               <button id="btn__iniciar-sesion">Iniciar Sesión</button>
+           </div>
+           <div class="caja__trasera-register">
+               <h3>¿Aún no tienes una cuenta?</h3>
+               <p>Regístrate para que puedas iniciar sesión</p>
+               <button id="btn__registrarse">Regístrarse</button>
+           </div>
+       </div>
+
+       <!--Formulario de Login y registro-->
+       <div class="contenedor__login-register">
+           <!--Login-->
+           <form method="post" action="login_post">
+            {%csrf_token%}
+               <h2>Iniciar Sesión</h2>
+               <input name="email" type="text" placeholder="Usuario" required>
+               <input name="password" type="password" placeholder="Contraseña" required>
+               <button type="submit"> Entrar</button>
+           </form>
+
+           <!--Register-->
+           <form method="post" action="register_post" class="formulario__register">
+            {%csrf_token%}
+               <h2>Regístrarse</h2>
+               <input name="name" type="text" placeholder="Nombre" required>
+              
+               <input name="email" type="text" placeholder="Correo Electronico" required>
+             
+          
+               <input name="contact_number" type="tel" placeholder="Número de telefono" required>
+               <input name="password" type="password" placeholder="Contraseña" required>
+               <button type="submit">Regístrarse</button>
+           </form>
+       </div>
+   </div>
+ </main>
+ 
+ <!--Fin de formulario de registro-->
+                <div class="col-lg-5">
+                    <div class="bg-light mb-5 p-5">
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-geo-alt fs-1 text-primary me-3"></i>
+                            <div class="text-start">
+                                <h6 class="text-uppercase mb-1">Dirección</h6>
+                                <span>123 Calle Jordan, Cochabamba, Bolivia</span>
+                            </div>
+                            
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="bi bi-envelope-open fs-1 text-primary me-3"></i>
+                            <div class="text-start">
+                                <h6 class="text-uppercase mb-1">Correo Electrónico</h6>
+                                <span>informaciones123@gmail.com</span>
+                            </div>
+                            
+                        </div>
+                        <div class="d-flex align-items-center mb-4">
+                            <i class="bi bi-phone-vibrate fs-1 text-primary me-3"></i>
+                            <div class="text-start">
+                                <h6 class="text-uppercase mb-1">Llamanos</h6>
+                                <span>+591 555 5978</span>
+                            </div>
+                        </div>
+                        <div class="map-container">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3807.3680341583595!2d-66.1519779259498!3d-17.394116864374904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses!2sbo!4v1716324850111!5m2!1ses!2sbo" 
+                                width="600" height="250" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+
+
+
+        //Ejecutando funciones
+    document.getElementById("btn__iniciar-sesion").addEventListener("click", iniciarSesion);
+    document.getElementById("btn__registrarse").addEventListener("click", register);
+    window.addEventListener("resize", anchoPage);
+    
+    //Declarando variables
+    var formulario_login = document.querySelector(".formulario__login");
+    var formulario_register = document.querySelector(".formulario__register");
+    var contenedor_login_register = document.querySelector(".contenedor__login-register");
+    var caja_trasera_login = document.querySelector(".caja__trasera-login");
+    var caja_trasera_register = document.querySelector(".caja__trasera-register");
+    
+    
+        //FUNCIONES
+    
+    function anchoPage(){
+    
+        if (window.innerWidth > 850){
+            caja_trasera_register.style.display = "block";
+            caja_trasera_login.style.display = "block";
+        }else{
+            caja_trasera_register.style.display = "block";
+            caja_trasera_register.style.opacity = "1";
+            caja_trasera_login.style.display = "none";
+            formulario_login.style.display = "block";
+            contenedor_login_register.style.left = "0px";
+            formulario_register.style.display = "none";   
+        }
+    }
+    
+    anchoPage();
+    
+    
+    function iniciarSesion(){
+        caja_trasera_login.style.visibility = "hidden";
+        if (window.innerWidth > 850){
+            formulario_login.style.display = "block";
+            contenedor_login_register.style.left = "10px";
+            formulario_register.style.display = "none";
+            caja_trasera_register.style.opacity = "1";
+            caja_trasera_login.style.opacity = "0";
+        }else{
+            formulario_login.style.display = "block";
+            contenedor_login_register.style.left = "0px";
+            formulario_register.style.display = "none";
+            caja_trasera_register.style.display = "block";
+            caja_trasera_login.style.display = "none";
+        }
+    }
+    
+        function register(){
+            if (window.innerWidth > 850){
+                formulario_register.style.display = "block";
+                contenedor_login_register.style.left = "410px";
+                formulario_login.style.display = "none";
+                caja_trasera_register.style.opacity = "0";
+                caja_trasera_login.style.opacity = "1";
+            }else{
+                formulario_register.style.display = "block";
+                contenedor_login_register.style.left = "0px";
+                formulario_login.style.display = "none";
+                caja_trasera_register.style.display = "none";
+                caja_trasera_login.style.display = "block";
+                caja_trasera_login.style.opacity = "1";
+                //ag    
+                caja_trasera_login.style.visibility = "visible";
+    
+            }
+    }
+    
+    function mostrarVentana(company) {
+        var confirmacion = confirm('¿Desea tomar la cita para ' + company + '?');
+        
+        if (confirmacion) {
+          // Elimina la clase .selected de cualquier fila que la tenga
+          var rows = document.querySelectorAll('#customers tr');
+          rows.forEach(function(row) {
+            row.classList.remove('selected');
+          });
+      
+          // Agrega la clase .selected a la fila clicada
+          var selectedRow = event.currentTarget;
+          selectedRow.classList.add('selected');
+          
+          alert('Cita tomada exitosamente.');
+        }
+    
+    
+      }
+          (function ($) {
+        "use strict";
+    
+        // Sticky Navbar
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 40) {
+                $('.navbar').addClass('sticky-top');
+            } else {
+                $('.navbar').removeClass('sticky-top');
+            }
+        });
+        
+        // Dropdown on mouse hover
+        $(document).ready(function () {
+            function toggleNavbarMethod() {
+                if ($(window).width() > 992) {
+                    $('.navbar .dropdown').on('mouseover', function () {
+                        $('.dropdown-toggle', this).trigger('click');
+                    }).on('mouseout', function () {
+                        $('.dropdown-toggle', this).trigger('click').blur();
+                    });
+                } else {
+                    $('.navbar .dropdown').off('mouseover').off('mouseout');
+                }
+            }
+            toggleNavbarMethod();
+            $(window).resize(toggleNavbarMethod);
+        });
+    
+    
+        // Modal Video
+        $(document).ready(function () {
+            var $videoSrc;
+            $('.btn-play').click(function () {
+                $videoSrc = $(this).data("src");
+            });
+            console.log($videoSrc);
+    
+            $('#videoModal').on('shown.bs.modal', function (e) {
+                $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
+            })
+    
+            $('#videoModal').on('hide.bs.modal', function (e) {
+                $("#video").attr('src', $videoSrc);
+            })
+        });
+        
+        
+        // Back to top button
+        $(window).scroll(function () {
+            if ($(this).scrollTop() > 100) {
+                $('.back-to-top').fadeIn('slow');
+            } else {
+                $('.back-to-top').fadeOut('slow');
+            }
+        });
+        $('.back-to-top').click(function () {
+            $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+            return false;
+        });
+    
+    
+        // Product carousel
+        $(".product-carousel").owlCarousel({
+            autoplay: true,
+            smartSpeed: 1000,
+            margin: 45,
+            dots: false,
+            loop: true,
+            nav : true,
+            navText : [
+                '<i class="bi bi-arrow-left"></i>',
+                '<i class="bi bi-arrow-right"></i>'
+            ],
+            responsive: {
+                0:{
+                    items:1
+                },
+                768:{
+                    items:2
+                },
+                992:{
+                    items:3
+                },
+                1200:{
+                    items:4
+                }
+            }
+        });
+    
+    
+        // Team carousel
+        $(".team-carousel").owlCarousel({
+            autoplay: true,
+            smartSpeed: 1000,
+            margin: 45,
+            dots: false,
+            loop: true,
+            nav : true,
+            navText : [
+                '<i class="bi bi-arrow-left"></i>',
+                '<i class="bi bi-arrow-right"></i>'
+            ],
+            responsive: {
+                0:{
+                    items:1
+                },
+                768:{
+                    items:2
+                },
+                992:{
+                    items:3
+                },
+                1200:{
+                    items:4
+                }
+            }
+        });
+    
+    
+        // Testimonials carousel
+        $(".testimonial-carousel").owlCarousel({
+            autoplay: true,
+            smartSpeed: 1000,
+            items: 1,
+            dots: false,
+            loop: true,
+            nav : true,
+            navText : [
+                '<i class="bi bi-arrow-left"></i>',
+                '<i class="bi bi-arrow-right"></i>'
+            ],
+        });
+        
+    })(jQuery);
+    </script>
+{%endblock%}
