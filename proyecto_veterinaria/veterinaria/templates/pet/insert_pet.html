@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% block content %}
+
+<div class="container">
+
+    <form method="post" action="insert_pet_post">
+        {% csrf_token %}
+        
+          <fieldset>
+            <input name="pk" value="{{current_user.pk}}" type="hidden">
+            <legend>Datos de la mascota</legend>
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label">Nombre</label>
+              <input type="text" name="name"  class="form-control" placeholder="">
+            </div>
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label">Edad</label>
+              <input type="number" name="age"  class="form-control" placeholder="">
+            </div>
+            <div class="mb-3">
+              <label for="disabledTextInput" class="form-label">Raza</label>
+              <input type="text" name="breed"  class="form-control" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </fieldset>
+        </form>
+</div>
+
+
+{% endblock %}

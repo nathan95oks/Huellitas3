@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<main>
+    <div class="container my-5" id="citaFormSection">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="bg-light p-5 text-center">
+                    <h2>Tomar Cita</h2>
+                    <form id="citaForm">
+                        <div class="mb-3">
+                            <label for="doctor" class="form-label">Selecciona Doctor</label>
+                            <select class="form-select" id="doctor" required>
+                                <option value="">Selecciona un doctor</option>
+                                <!-- Aquí se llenarán los doctores desde la base de datos -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_mascota" class="form-label">ID Mascota</label>
+                            <input type="text" class="form-control" id="id_mascota" required>
+                        </div>
+                       <div class="mb-3">
+                            <label for="detalle" class="form-label">Detalle</label>
+                            <textarea class="form-control bg-white border-0 px-4 py-3" rows="8" placeholder="Mi mascota..."></textarea>
+                       </div>
+                        <button type="submit" class="btn btn-primary">Tomar Cita</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,140 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+    <!-- Dog Information Section Start -->
+    <div id="dog-info" class="container my-5">
+        <h2 class="text-center mb-4">Historial Médico de la Mascota</h2>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bg-light p-4 rounded">
+                    <h4 class="text-primary h4-name">Nombre de la mascota: <span id="dogName">{{pet.name}}</span></h4>
+                    <h4 class="text-primary h4-age">Edad: <span id="dogAge">{{pet.age}}</span></h4>
+                    <h4 class="text-primary h4-breed">Raza: <span id="dogBreed">{{pet.breed}}</span></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dog Information Section End -->
+    <!-- Pet Allergies -->
+
+    <div class="container my-5">
+
+            <h3 class="text-center mb-4">Alergias</h3>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Eliminar</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {%for allergy in allergies%}
+                    <tr>
+                        <th scope="row">*</th>
+                        <td>{{allergy.name}}</td>
+                        <td>
+                            <form action="{% url 'delete_allergy_post' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="pk" value="{{allergy.pk}}">
+                                <input type="hidden" name="mpk" value="{{pet.pk}}">
+                                <button class="btn btn-danger" type="submit">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {%endfor%}
+            </table>
+            <button class="btn btn-secondary" onclick="document.getElementById('new-form').style.display='block', document.getElementById('cancel-btn').style.display='inline'">Nuevo</button>
+            <button id="cancel-btn" onclick="document.getElementById('new-form').style.display='none', document.getElementById('cancel-btn').style.display='none'" class="btn btn-danger" style="display: none;">Cancelar</button>
+            <form id="new-form" method="post" action="{% url 'insert_allergy_post' %}" style="display: none;">
+                {% csrf_token %}
+                <fieldset>
+                    <input type="hidden" name="pk" value="{{pet.pk}}">
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Nombre</label>
+                        <input type="text" name="name"  class="form-control" placeholder="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="disabledTextInput" class="form-label">Descripcion</label>
+                        <input type="text" name="description" class="form-control" placeholder="">
+                    </div>
+                </fieldset>
+                <button type="submit" class="btn btn-success">Agregar</button>
+            </form>
+            </tbody>
+    </div>
+
+    <!-- Medical History Section Start -->
+    <div id="medical-history" class="container my-5">
+        <h3 class="text-center mb-4">Historial Consultas</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Doctor</th>
+                    <th>Detalles</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for appo in appointments %}
+                <tr>
+                    <td>{{appo.fmtdate}}</td>
+                    <td>{{appo.doctor.user.name}}</td>
+                    <td>{{appo.details}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Medical History Section End -->
+
+    <!-- Vaccination History Section Start -->
+    <div id="vaccination-history" class="container my-5">
+        <h3 class="text-center mb-4">Historial de Vacunas</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Vacuna</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for vaccine in vaccines %}
+                <td>{{vaccine.fmtdate}}</td>
+                <td>{{vaccine.vaccine.name}}</td>
+                {% endfor %}
+                
+            </tbody>
+        </table>
+    </div>
+    <!-- Vaccination History Section End -->
+
+    <!-- Disease History Section Start -->
+    <div id="disease-history" class="container my-5">
+        <h3 class="text-center mb-4">Historial de Enfermedades</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Enfermedad</th>
+                    <th>Tratamiento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>15/04/2024</td>
+                    <td>Moquillo</td>
+                    <td>Antibióticos y fluidoterapia</td>
+                </tr>
+                <tr>
+                    <td>20/07/2024</td>
+                    <td>Parvovirus</td>
+                    <td>Antibióticos y terapia de soporte</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Disease History Section End -->
+
+{% endblock %}

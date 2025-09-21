@@ -1,0 +1,48 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+
+ <!-- Mascotas List Start -->
+ <div class="container my-5">
+    <h2 class="text-center mb-4">Lista de Mascotas</h2>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="bg-light p-4 rounded">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre de la Mascota</th>
+                            <th>ID del Cliente</th>
+                            <th>Raza</th>
+                            <th>Editar</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mascotasTableBody">
+                        <!-- Las mascotas se cargarán aquí -->
+                        {%for pet in pets%}
+                            <tr>
+                                <th scope="row">*</th>
+                                <td>{{pet.name}}</td>
+                                <td>{{pet.age}}</td>
+                                <td>{{pet.breed}}</td>
+                                <td><a href="{% url 'edit_pet_view' pet.pk %}"  class="btn btn-success">Ver</a></td>
+                                <td>
+                                <form action="delete_pet/{{pet.pk}}" method="post">
+                                    {% csrf_token %}
+                                    <button class="btn btn-danger" type="submit">Eliminar</button>
+                                </form>
+                                </td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+                <a href="{% url 'insert_pet_view' %}" class="btn btn-success">Nueva mascota</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Mascotas List End -->
+
+{% endblock %}

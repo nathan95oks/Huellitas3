@@ -1,0 +1,24 @@
+{% extends "menu_bar.html" %}
+
+{% block content %}
+
+<form method="post" action="insert_appointment_post">
+  {% csrf_token %}
+    <fieldset>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Fecha y Hora</label>
+        <input type="datetime-local" name="datetime" class="form-control" placeholder="Disabled input">
+      </div>
+      <div class="mb-3">
+        <select class="form-select" name="doc_pk">
+          <option selected>Select DOc.</option>
+          {% for doctor in doctors %}
+          <option value="{{doctor.pk}}">{{doctor.user.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+  </form>
+{% endblock %}

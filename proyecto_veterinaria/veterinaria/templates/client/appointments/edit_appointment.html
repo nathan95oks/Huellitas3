@@ -1,0 +1,70 @@
+{% extends 'main/base.html' %}
+
+
+
+{% block content %}
+
+<main>
+    <div class="container my-5" id="citaFormSection">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="bg-light p-5 text-center">
+                    <h2>Tomar Cita</h2>
+                    <form id="citaForm" method="post" action="{% url 'edit_appointment_post' %}">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{appointment.pk}}" name="appo_pk">
+                        <div class="mb-3">
+                            <label for="doctor" class="form-label">Selecciona Mascota</label>
+                            <select name="pet_pk" class="form-select" id="doctor" required>
+                                {% for pet in pets %}
+                                {% if pet.pk == appointment.pet.pk %}
+                                <option value="{{pet.pk}}" selected>{{pet.name}}</option>
+                                {% else %}
+                                <option value="{{pet.pk}}">{{pet.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                <!-- Aquí se llenarán los doctores desde la base de datos -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="doctor" class="form-label">Selecciona Doctor</label>
+                            <select name="doc_pk" value="" class="form-select" id="doctor" required>
+                                {% for doctor in doctors %}
+                                {% if doctor.pk == appointment.doctor.pk %}
+                                <option value="{{doctor.pk}}" selected="selected">{{doctor.user.name}}</option>
+                                {% else %}
+                                <option value="{{doctor.pk}}">{{doctor.user.name}}</option>
+                                {% endif %}
+                                {% endfor %}
+                                <!-- Aquí se llenarán los doctores desde la base de datos -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Fecha y Hora</label>
+                            <input type="datetime-local" value="{{appointment.fmtisodate}}" name="datetime" class="form-control" id="fecha" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha" class="form-label">Mis notas</label>
+                            <textarea name="client_details" class="form-control" cols="30" rows="10"> 
+                                {{appointment.client_details}}
+                            </textarea>
+                        </div>
+                       
+
+                        <button type="submit" class="btn btn-primary">Editar Cita</button>
+                    </form>
+                    <div>
+                        <form action="{% url 'delete_appointment' appointment.pk %}" method="post">
+                            {% csrf_token %}
+                            <button class="btn btn-danger" type="submit">Eliminar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
+

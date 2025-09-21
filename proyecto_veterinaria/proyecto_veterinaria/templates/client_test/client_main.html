@@ -1,0 +1,18 @@
+{% extends "menu_bar.html" %}
+
+{% block content %}
+{{user.name}}
+<a class="btn btn-primary" href="pets">
+    Pets
+</a>
+<a class="btn btn-danger" href="new_pet">
+    New Pet
+</a>
+<a class="btn btn-danger" href="new_appointment">
+    New Appointment
+</a>
+<a class="btn btn-danger" href="appointments">
+    Appointments
+</a>
+
+{% endblock %}

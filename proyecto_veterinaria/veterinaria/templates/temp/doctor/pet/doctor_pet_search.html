@@ -1,0 +1,58 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+
+<div class="container my-5">
+    <form id="citaForm" method="post" action="{% url 'doctor_search_pet_view' %}">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="detalles" class="form-label">Nombre de Mascota</label>
+            <input type="text" class="form-control"  name="name">
+
+        </div>
+        <button type="submit" class="btn btn-primary">Buscar</button>
+    </form>
+</div>
+
+    <!-- Dog Information Section Start -->
+    <div id="dog-info" class="container my-5">
+        <table>
+            <thead>
+                <tr>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Ver mas
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {{pets}}
+                {% if pets %}
+                {% for pet in pets %}
+                <tr>
+                    <th>
+                        {{pet.name}}
+                    </th>
+                    <th>
+                        <a href="" class="btn btn-danger">Mas Informacion</a>
+                    </th>
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <!-- Dog Information Section End -->
+    <!-- Pet Allergies -->
+
+
+
+
+    <!-- Medical History Section Start -->
+    
+    <!-- Disease History Section End -->
+
+{% endblock %}

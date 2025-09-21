@@ -1,0 +1,67 @@
+{% extends "menu_bar.html" %}
+
+{% block content %}
+
+<form method="post" action="edit_pet_post">
+  {% csrf_token %}
+    <fieldset>
+      <legend>Disabled fieldset example</legend>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Name</label>
+        <input type="text" name="name" value="{{pet.name}}"  class="form-control" placeholder="Disabled input">
+      </div>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Age</label>
+        <input type="number" name="age" value="{{pet.age}}"  class="form-control" placeholder="Disabled input">
+      </div>
+      <div class="mb-3">
+        <label for="disabledTextInput" class="form-label">Breed</label>
+        <input type="text" name="breed" value="{{pet.breed}}" class="form-control" placeholder="Disabled input">
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </fieldset>
+  </form>
+  <h1>Alergias</h1>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for allergy in allergies%}
+        <tr>
+            <th scope="row">*</th>
+            <td>{{allergy.name}}</td>
+            <td>
+                <form action="{% url 'delete_allergy' pk=allergy.pk mk=pet.pk %}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+          </tr>
+        {%endfor%}
+
+
+  </table>
+  <button class="btn btn-secondary" onclick="document.getElementById('new-form').style.display='block', document.getElementById('cancel-btn').style.display='inline'">New</button>
+  <button id="cancel-btn" onclick="document.getElementById('new-form').style.display='none', document.getElementById('cancel-btn').style.display='none'" class="btn btn-danger" style="display: none;">Cancel</button>
+  <form id="new-form" method="post" action="insert_allergy_post/{{pet.pk}}" style="display: none;">
+      {% csrf_token %}
+      {{url}}
+      <fieldset>
+        <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">Name</label>
+            <input type="text" name="name"  class="form-control" placeholder="Disabled input">
+          </div>
+          <div class="mb-3">
+            <label for="disabledTextInput" class="form-label">Description</label>
+            <input type="text" name="description" class="form-control" placeholder="Disabled input">
+          </div>
+      </fieldset>
+      <button type="submit" class="btn btn-success">Agregar</button>
+  </form>
+  </tbody>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+    <!-- Dog Information Section Start -->
+    <div id="dog-info" class="container my-5">
+        <h2 class="text-center mb-4">Detalles de cita</h2>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bg-light p-4 rounded">
+                    <h4 class="text-primary h4-name">Nombre de la mascota: <span id="dogName">{{appointment.pet.name}}</span></h4>
+                    <h4 class="text-primary h4-age">Edad: <span id="dogAge">{{appointment.pet.age}}</span></h4>
+                    <h4 class="text-primary h4-breed">Raza: <span id="dogBreed">{{appointment.pet.breed}}</span></h4>
+                    <a class="btn btn-success" href="{% url 'doctor_pet_view' appointment.pet.pk %}">Ver Mas Detalles</a>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="bg-light p-4 rounded">
+                    <h4 class="text-primary h4-name">Nombre de cliente: <span id="dogName">{{appointment.client.user.name}}</span></h4>
+                    <h4 class="text-primary h4-age">Numero de contacto: <span id="dogAge">{{appointment.client.user.contact_number}}</span></h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bg-light p-4 rounded">
+                    <h4 class="text-primary h4-name">Fecha y hora: <span id="dogName">{{appointment.fmtdate}}</span></h4>
+                    {% if appointment.is_active %}
+                    <h4 class="text-success h4-name">Estado: <span id="dogName">ACTIVO</span></h4>
+                    {% else %}
+                    <h4 class="text-danger h4-name">Estado: <span id="dogName">INACTIVO</span></h4>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="bg-light p-4 rounded">
+                    <h4 class="text-primary h4-name">Detalles de cliente</h4>
+                    <p>{{appointment.client_details}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Dog Information Section End -->
+    <!-- Pet Allergies -->
+
+
+    <div class="container my-5">
+            <form id="citaForm" method="post" action="{% url 'doctor_end_appointment_post' %}">
+                {% csrf_token %}
+                <input type="hidden" value="{{appointment.pk}}" name="appo_pk">
+                <div class="mb-3">
+                    <label for="detalles" class="form-label">Detalles</label>
+                    <textarea name="details" class="form-control">
+                        {{appointment.details}}
+                    </textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Terminar Cita</button>
+            </form>
+    </div>
+
+    <!-- Medical History Section Start -->
+    
+    <!-- Disease History Section End -->
+
+{% endblock %}

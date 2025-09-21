@@ -1,0 +1,89 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+ <!-- service section -->
+ <div id="service" class="service">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-7">
+             <div class="titlepage">
+                <h2><strong class="yellow">Bienvenido</strong><br>Mis citas</h2>
+             </div>
+          </div>
+       </div>
+       <h3><strong class="text-danger">Citas Pendientes</strong></h3>
+       <table class="table table-striped" id="customers">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Hora y Fecha</th>
+                <th>Cliente</th>
+                <th>Mascota</th>
+                <th>Editar</th>
+              </tr>
+        </thead>
+        <tbody>
+            {%for fmtddate, appointment in appointments%}
+            {% if appointment.is_active %}
+            <tr>
+                <th scope="row">*</th>
+                <td>{{fmtddate}}</td>
+                <td>{{appointment.client.user.name}}</td>
+                <td>{{appointment.pet.name}}</td>
+                <td>
+                    <form action="{% url 'doctor_appointment_view' %}" method="post">
+                        {% csrf_token %}
+                        <input required type="hidden" name="appo_pk" value="{{appointment.pk}}">
+                        <button class="btn btn-success" type="submit">Editar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {%endfor%}
+        </tbody>
+ 
+         
+       </table>
+
+       <h3><strong class="text-success">Citas Inactivas</strong></h3>
+       <table class="table table-striped" id="customers">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Hora y Fecha</th>
+                <th>Cliente</th>
+                <th>Mascota</th>
+                <th>Editar</th>
+              </tr>
+        </thead>
+        <tbody>
+            {%for fmtddate, appointment in appointments%}
+            {% if not appointment.is_active %}
+            <tr>
+                <th scope="row">*</th>
+                <td>{{fmtddate}}</td>
+                <td>{{appointment.client.user.name}}</td>
+                <td>{{appointment.pet.name}}</td>
+                <td>
+                    <form action="{% url 'doctor_appointment_view' %}" method="post">
+                        {% csrf_token %}
+                        <input required type="hidden" name="appo_pk" value="{{appointment.pk}}">
+                        <button class="btn btn-success" type="submit">Editar</button>
+                    </form>
+                </td>
+            </tr>
+            {% endif %}
+            {%endfor%}
+        </tbody>
+ 
+         
+       </table>
+       
+        <a class="btn btn-primary" href="{% url 'new_appointment' %}">Nueva Cita</a>
+     
+    </div>
+ </div>
+ </div>
+
+{% endblock %}

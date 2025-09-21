@@ -1,0 +1,30 @@
+{% extends "menu_bar.html" %}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Date</th>
+        <th scope="col">Doctor</th>
+        <th scope="col">Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+        {%for fmtddate, appointment in appointments%}
+        <tr>
+            <th scope="row">*</th>
+            <td>{{fmtddate}}</td>
+            <td>{{appointment.doctor.user.name}}</td>
+            <td>
+                <form action="delete_appointment/{{appointment.pk}}" method="post">
+                    {% csrf_token %}
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                </form>
+            </td>
+          </tr>
+        {%endfor%}
+    </tbody>
+  </table>
+{% endblock %}

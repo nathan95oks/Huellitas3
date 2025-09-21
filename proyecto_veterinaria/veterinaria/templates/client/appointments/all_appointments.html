@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+ <!-- service section -->
+ <div id="service" class="service">
+    <div class="container">
+       <div class="row">
+          <div class="col-md-7">
+             <div class="titlepage">
+                <h2><strong class="yellow">Bienvenido</strong><br>CITAS PENDIENTES</h2>
+             </div>
+          </div>
+       </div>
+       <table class="table table-striped" id="customers">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Hora y Fecha</th>
+                <th>Doctor</th>
+                <th>Mascota</th>
+                <th>Estado</th>
+                <th>Editar</th>
+                <th>Notas de Veterinario</th>
+              </tr>
+        </thead>
+        <tbody>
+            {%for fmtddate, appointment in appointments%}
+            <tr>
+                <th scope="row">*</th>
+                <td>{{fmtddate}}</td>
+                <td>{{appointment.doctor.user.name}}</td>
+                <td>{{appointment.pet.name}}</td>
+                {% if appointment.is_active %}
+                <td><span class="text-success"> Pendiente </span></td>
+                {% else %}
+                <td><span class="text-danger"> Inactivo </span></td>
+                {% endif %}
+                <td>
+                <a href="{% url 'edit_appointment_view' appointment.pk %}" class="btn btn-success">Ver Mas</a>
+                </td>
+
+                <td>
+                                            <!-- Modal -->
+                        <div id="myModal{{appointment.pk}}" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                        
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Notas de Dr. {{appointment.doctor.user.name}}</h4>
+                                </div>
+                                <div class="modal-body">
+                                <p id="modal_content">{{appointment.doctor_details}}</p>
+                                </div>
+                                <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                </div>
+                            </div>
+                        
+                            </div>
+                        </div>
+                        <button id="togglebtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal{{appointment.pk}}">Notas de Veterinario</button>
+
+
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+ 
+         
+       </table>
+       
+        <a class="btn btn-primary" href="{% url 'new_appointment' %}">Nueva Cita</a>
+       
+
+    </div>
+ </div>
+ </div>
+
+
+<script type="text/javascript">
+    function trigger( content ) {
+        let p = document.getElementById('modal_content')
+        p.innerText = content
+        document.getElementById('togglebtn').click()
+    }
+</script>
+
+<!-- Trigger the modal with a button -->
+
+{% endblock %}
+
+
+
+  
